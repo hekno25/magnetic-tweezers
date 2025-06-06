@@ -123,7 +123,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def on_spinbox_editing_finished(self, index):
         slider, spinbox, _axis = self.coil_inputs[index]
         slider.setValue(int(spinbox.value() * 1000))
-        self.on_slider_released(index)
 
     def on_slider(self, index, value):
         slider, spinbox, axis = self.coil_inputs[index]
