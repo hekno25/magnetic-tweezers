@@ -44,9 +44,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         for index, (slider, spinbox, _axis) in enumerate(self.coil_inputs):
             # We provide just the index, QT's signal system will provide the
             # value for the callback
-            slider.valueChanged.connect(
-                functools.partial(self.on_slider, index)
-            )
+            slider.valueChanged.connect(functools.partial(self.on_slider, index))
             spinbox.editingFinished.connect(
                 functools.partial(self.on_spinbox_editing_finished, index)
             )
@@ -164,16 +162,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             print(f"Closed port: {self.com_port}")  # Confirm port is closed
         except Exception as e:
             print(e)
-            
-if not QtWidgets.QApplication.instance():
-    app = QtWidgets.QApplication(sys.argv)
-else:
-    app = QtWidgets.QApplication.instance()
+
 
 if __name__ == "__main__":
-    app.setStyle("Fusion")
+    app = None
+    if not QtWidgets.QApplication.instance():
+        app = QtWidgets.QApplication(sys.argv)
+    else:
+        app = QtWidgets.QApplication.instance()
 
     window = MainWindow()
 
     window.show()
-    app.exec()
+    if app:
+        app.exec()
